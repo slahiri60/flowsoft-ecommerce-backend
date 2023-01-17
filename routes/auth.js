@@ -10,6 +10,7 @@ import { register, login, secret } from '../controllers/auth.js';
 router.post('/register', register);
 router.post('/login', login);
 // testing
-router.get('/secret', requireSignin, isAdmin, secret);
+router.get('/secretadmin', requireSignin, isAdmin, secret);
+router.get('/secretgeneraluser', requireSignin, secret);
 
 export default router;
