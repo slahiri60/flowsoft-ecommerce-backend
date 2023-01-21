@@ -11,18 +11,20 @@ export const register = async (req, res) => {
     const { name, email, password } = req.body;
     // 2. all fields require validation
     if (!name.trim()) {
-      return res.json({ error: 'Name is required' });
+      return res.status(500).json({ error: 'Name is required' });
     }
     if (!email) {
-      return res.json({ error: 'Email is required' });
+      return res.status(500).json({ error: 'Email is required' });
     }
     if (!password || password.length < 6) {
-      return res.json({ error: 'Password must be at least 6 characters long' });
+      return res
+        .status(500)
+        .json({ error: 'Password must be at least 6 characters long' });
     }
     // 3. check if email is taken
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.json({ error: 'Email is taken' });
+      return res.status(400).json({ error: 'Email is taken' });
     }
     // 4. hash password
     const hashedPassword = await hashPassword(password);
@@ -57,15 +59,17 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
     // 2. all fields require validation
     if (!email) {
-      return res.json({ error: 'Email is required' });
+      return res.status(500).json({ error: 'Email is required' });
     }
     if (!password || password.length < 6) {
-      return res.json({ error: 'Password must be at least 6 characters long' });
+      return res
+        .status(500)
+        .json({ error: 'Password must be at least 6 characters long' });
     }
-    // 3. check if email is taken
+    // 3. check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.json({ error: 'User not found' });
+      return res.status(401).json({ error: 'Invalid user or password' });
     }
     // 4. compare password
     const match = await comparePassword(password, user.password);
