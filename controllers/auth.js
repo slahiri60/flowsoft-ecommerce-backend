@@ -69,12 +69,12 @@ export const login = async (req, res) => {
     // 3. check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: 'Invalid user or password' });
+      return res.status(401).json({ error: 'Invalid username or password' });
     }
     // 4. compare password
     const match = await comparePassword(password, user.password);
     if (!match) {
-      return res.json({ error: 'Wrong password' });
+      return res.status(401).json({ error: 'Invalid username or password' });
     }
     // 5. create signed jwt
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
