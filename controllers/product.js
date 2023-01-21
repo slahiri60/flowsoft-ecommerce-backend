@@ -9,7 +9,7 @@ export const create = async (req, res) => {
     const { photo } = req.files;
 
     // validation
-    switch (true) {
+    /*     switch (true) {
       case !name.trim():
         res.status(500).json({ error: 'Name is required' });
         break;
@@ -35,6 +35,10 @@ export const create = async (req, res) => {
         break;
       default:
         break;
+    } */
+
+    if (!name.trim()) {
+      return res.status(500).json({ error: 'Name is required' });
     }
 
     // create product
@@ -113,7 +117,7 @@ export const update = async (req, res) => {
     const { photo } = req.files;
 
     // validation
-    switch (true) {
+    /*    switch (true) {
       case !name.trim():
         res.status(500).json({ error: 'Name is required' });
         break;
@@ -139,7 +143,7 @@ export const update = async (req, res) => {
         break;
       default:
         break;
-    }
+    } */
 
     // update product
     const product = await Product.findByIdAndUpdate(
