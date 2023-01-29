@@ -12,5 +12,8 @@ router.post('/login', login);
 // testing
 router.get('/secretadmin', requireSignin, isAdmin, secret);
 router.get('/secretgeneraluser', requireSignin, secret);
+router.get('/auth-check', requireSignin, (req, res) => {
+  res.json({ ok: true });
+});
 
 export default router;
